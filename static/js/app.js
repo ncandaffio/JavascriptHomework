@@ -23,15 +23,32 @@ function init(){
 
 function filtertable(event){
     console.log("filtering...")
+    var filterTerm = d3.select('#selector').node().value
+    console.log(filterTerm)
     d3.event.preventDefault();
-    var dateFilter = d3.select('#datetime').node().value;
+    var dateFilter = d3.select('#filter').node().value;
     console.log(dateFilter)
 
     if (dateFilter === ""){populateTable(tableData);}
 
     else {
-        var filteredData = tableData.filter(sighting => sighting.datetime === dateFilter);
-        console.log(filteredData);
+        var filteredData = []
+        if (filterTerm === 'datetime') {
+            filteredData = tableData.filter(sighting => sighting.datetime === dateFilter);
+        }
+        else if (filterTerm === 'city') {
+            filteredData = tableData.filter(sighting => sighting.city === dateFilter);            
+        }
+        else if (filterTerm === 'state') {
+            filteredData = tableData.filter(sighting => sighting.state === dateFilter);            
+        }
+        else if (filterTerm === 'country') {
+            filteredData = tableData.filter(sighting => sighting.country === dateFilter);            
+        }
+        else {
+            filteredData = tableData.filter(sighting => sighting.shape === dateFilter);            
+        }
+
         populateTable(filteredData);
     }
 };
